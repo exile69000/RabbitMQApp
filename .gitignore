@@ -13,5 +13,5 @@
 /ConsumerApp2/
 /ConsumerApp3/
 /ProducerApp/
-/RabbitMQSql/RabbitMQSql.csproj
-/RabbitMqTest/RabbitMqTest.csproj
+/RabbitMQSql/
+/RabbitMqTest/

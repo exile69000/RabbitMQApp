@@ -1,0 +1,402 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Tdi.RabbitMQ.Bll</name>
+    </assembly>
+    <members>
+        <member name="M:Tdi.RabbitMQ.Bll.Interfaces.IRabbitMQService.ConnectToServer(System.Uri)">
+            <summary>
+            Connexion au serveur de manière synchrone
+            </summary>
+            <param name="uri">amqp://user:pass@hostName:port/vhost</param>
+        </member>
+        <member name="M:Tdi.RabbitMQ.Bll.Interfaces.IRabbitMQService.ConnectToServerWithConsumersAsync(System.Uri)">
+            <summary>
+            Connexion au serveur avec la consommation des messages de maniere asynchrone
+            </summary>
+            <param name="uri">amqp://user:pass@hostName:port/vhost</param>
+        </member>
+        <member name="M:Tdi.RabbitMQ.Bll.Interfaces.IRabbitMQService.DisconnectToServer(System.EventHandler{Tdi.RabbitMQ.Bll.Models.DataReceived})">
+            <summary>
+            Ferme la connexion au serveur et se désabonne
+            </summary>
+            <param name="messageReceived">null ou methode</param>
+        </member>
+        <member name="M:Tdi.RabbitMQ.Bll.Interfaces.IRabbitMQService.DisconnectToServerAsync(RabbitMQ.Client.Events.AsyncEventHandler{Tdi.RabbitMQ.Bll.Models.DataReceived})">
+            <summary>
+            Ferme la connexion au serveur et se désabonne en asynchrone
+            </summary>
+            <param name="messageReceived"></param>
+        </member>
+        <member name="M:Tdi.RabbitMQ.Bll.Interfaces.IRabbitMQService.DeclareLinkOnChannel(System.String,System.String)">
+            <summary>
+            Déclare le canal d'écoute
+            </summary>
+            <param name="queueName">Nom de la file d'attente ou null</param>
+            <param name="exchangeName">Nom de l'echangeur ou null</param>
+        </member>
+        <member name="M:Tdi.RabbitMQ.Bll.Interfaces.IRabbitMQService.ClearChannel">
+            <summary>
+            Suppression du canal écouté et ses déclarations afin de rappeler DeclareChannel()
+            </summary>
+        </member>
+        <member name="M:Tdi.RabbitMQ.Bll.Interfaces.IRabbitMQService.SetEventHandlerMessage(System.EventHandler{Tdi.RabbitMQ.Bll.Models.DataReceived},System.Boolean)">
+            <summary>
+            Spécifie une méthode qui recevra l'évènement à la réception d'un message
+            </summary>
+            <param name="messageReceived">Methode qui recevra l'évènement</param>
+            <param name="forcedNewSubscription">Force un nouveau abonnement même si celui si existe deja</param>
+        </member>
+        <member name="M:Tdi.RabbitMQ.Bll.Interfaces.IRabbitMQService.SetEventHandlerMessageAsync(RabbitMQ.Client.Events.AsyncEventHandler{Tdi.RabbitMQ.Bll.Models.DataReceived},System.Boolean)">
+            <summary>
+            Specifie une methode qui recevra l'évenement à la réception d'un message en asynchrone
+            </summary>
+            <param name="messageReceived">Methode qui recevra l'évènement</param>
+            <param name="forcedNewSubscription">Force un nouveau abonnement même si celui si existe deja</param>
+        </member>
+        <member name="M:Tdi.RabbitMQ.Bll.Interfaces.IRabbitMQService.DeleteEventHandlerMessage(System.EventHandler{Tdi.RabbitMQ.Bll.Models.DataReceived})">
+            <summary>
+            Desabonne la methode qui recoit l'evenement à la réception d'un message
+            </summary>
+            <param name="messageReceived">Methode a désabonner</param>
+        </member>
+        <member name="M:Tdi.RabbitMQ.Bll.Interfaces.IRabbitMQService.DeleteEventHandlerMessageAsync(RabbitMQ.Client.Events.AsyncEventHandler{Tdi.RabbitMQ.Bll.Models.DataReceived})">
+            <summary>
+            Desabonne la methode qui recoit l'evenement à la réception d'un message en async
+            </summary>
+            <param name="messageReceived">Methode a désabonner</param>
+        </member>
+        <member name="M:Tdi.RabbitMQ.Bll.Interfaces.IRabbitMQService.SendDirectData(System.String,System.String)">
+            <summary>
+            Envoi un message sur la file d'attente
+            </summary>
+            <param name="data">Données à envoyer</param>
+            <param name="forcedQueueName">Si non vide : envoie le message sur cette file d'attente</param>
+        </member>
+        <member name="M:Tdi.RabbitMQ.Bll.Interfaces.IRabbitMQService.SendTopicData(System.String,System.String)">
+            <summary>
+            Envoyer un sujet sur l'échangeur
+            </summary>
+            <param name="topic">Nom du sujet</param>
+            <param name="data">Données à envoyer</param>
+            <example>
+            SendTopicData(ConstantsHelper.ExchangeTdiTopics, ConstantsHelper.TopicGenerateEDI, "objet json sérialisé")
+            </example>
+        </member>
+        <member name="M:Tdi.RabbitMQ.Bll.Interfaces.IRabbitMQService.GetManualData(System.Boolean)">
+            <summary>
+            Regarde si un message est sur la file d'attente le supprime (si autoAck) et renvoi le message
+            </summary>
+            <param name="autoAck">Supprime le message automatiquement une fois lu</param>
+            <returns></returns>
+        </member>
+        <member name="M:Tdi.RabbitMQ.Bll.Interfaces.IRabbitMQService.QueueSubscription(System.Boolean)">
+            <summary>
+            Inscription à une file d'attente défini
+            </summary>
+            <param name="deleteMessageAfterReceive">Suppression du message après lecture du message (par défaut vrai)</param>
+        </member>
+        <member name="M:Tdi.RabbitMQ.Bll.Interfaces.IRabbitMQService.ExchangeTopicSubscription(System.Collections.Generic.List{System.String},System.Boolean)">
+            <summary>
+            Abonnement à une liste de sujet sur l'échangeur
+            </summary>
+            <param name="consumerTopics">liste des sujets écoutés</param>
+            <param name="deleteMessageAfterReceive">true si suppression apres la lecture du message</param>
+            <example>
+            string[] topics = new string[1];
+            topics[0] = ConstantsHelper.TopicGenerateEDI;
+            ExchangeTopicSubscription(topics)
+            </example>  
+        </member>
+        <member name="M:Tdi.RabbitMQ.Bll.Interfaces.IRabbitMQService.FlagReadMessage(System.UInt64)">
+            <summary>
+            Indique que le message a été traité
+            </summary>
+            <param name="deliveryTag">Tag du message réceptionné</param>
+            <example>
+            FlagReadMessage(dataReceived.DeliveryTag);
+            </example>
+        </member>
+        <member name="P:Tdi.RabbitMQ.Bll.Interfaces.IRabbitMQService.Connection">
+            <summary>
+            Connexion du service
+            </summary>
+        </member>
+        <member name="P:Tdi.RabbitMQ.Bll.Interfaces.IRabbitMQService.Channel">
+            <summary>
+            Canal du service
+            </summary>
+        </member>
+        <member name="P:Tdi.RabbitMQ.Bll.Interfaces.IRabbitMQService.QueueName">
+            <summary>
+            Nom de la file d'attente du service
+            </summary>
+        </member>
+        <member name="P:Tdi.RabbitMQ.Bll.Interfaces.IRabbitMQService.ExchangeName">
+            <summary>
+            Echangeur du service
+            </summary>
+        </member>
+        <member name="T:Tdi.RabbitMQ.Bll.Models.DataReceived">
+            <summary>
+            Réception d'un message
+            </summary>
+        </member>
+        <member name="P:Tdi.RabbitMQ.Bll.Models.DataReceived.KeyName">
+            <summary>
+            Nom de la file d'attente ou du topic
+            </summary>
+        </member>
+        <member name="P:Tdi.RabbitMQ.Bll.Models.DataReceived.Data">
+            <summary>
+            Données receptionnés
+            </summary>
+        </member>
+        <member name="P:Tdi.RabbitMQ.Bll.Models.DataReceived.Channel">
+            <summary>
+            Objet IModel permet l'acquittement du message
+            </summary>
+        </member>
+        <member name="P:Tdi.RabbitMQ.Bll.Models.DataReceived.DeliveryTag">
+            <summary>
+            Tag du message permet l'acquittement du message
+            </summary>
+        </member>
+        <member name="F:Tdi.RabbitMQ.Bll.Services.RabbitMQService._defaultConnectionTimeout">
+            <summary>
+            Default value for connection attempt timeout. Par defaut 30secs
+            </summary>
+        </member>
+        <member name="E:Tdi.RabbitMQ.Bll.Services.RabbitMQService._messageReceived">
+            <summary>
+            Evenement renvoyé lors d'une reception d'un message
+            </summary>
+        </member>
+        <member name="M:Tdi.RabbitMQ.Bll.Services.RabbitMQService.#ctor">
+            <summary>
+            Constructeur par defaut
+            </summary>
+        </member>
+        <member name="M:Tdi.RabbitMQ.Bll.Services.RabbitMQService.#ctor(System.Uri)">
+            <summary>
+            Constructeur en initialisation une connexion
+            </summary>
+            <param name="uri">amqp://user:pass@hostName:port/vhost</param>
+        </member>
+        <member name="M:Tdi.RabbitMQ.Bll.Services.RabbitMQService.Finalize">
+            <summary>
+            Destructeur
+            </summary>
+        </member>
+        <member name="M:Tdi.RabbitMQ.Bll.Services.RabbitMQService.Dispose">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Tdi.RabbitMQ.Bll.Services.RabbitMQService.Dispose(System.Boolean)">
+            <summary>
+            Protected implementation of Dispose pattern. 
+            </summary>
+            <param name="disposing"></param>
+        </member>
+        <member name="P:Tdi.RabbitMQ.Bll.Services.RabbitMQService.GetInstance">
+            <summary>
+            Renvoi une instance de l'objet (singleton)
+            Sans besoin de connexion
+            </summary>
+        </member>
+        <member name="M:Tdi.RabbitMQ.Bll.Services.RabbitMQService.GetInstanceConnection(System.Uri)">
+            <summary>
+            Renvoi une instance de l'objet avec initialisation de la connexion (singleton)
+            </summary>
+            <param name="uri">amqp://user:pass@hostName:port/vhost</param>
+            <returns></returns>
+        </member>
+        <member name="M:Tdi.RabbitMQ.Bll.Services.RabbitMQService.GetInstanceConnectionWithConsumersAsync(System.Uri,RabbitMQ.Client.Events.AsyncEventHandler{Tdi.RabbitMQ.Bll.Models.DataReceived})">
+            <summary>
+            Renvoi une instance de l'objet avec initialisation de la connexion en asynchrone lors de la réception des message (singleton)
+            </summary>
+            <param name="uri">amqp://user:pass@hostName:port/vhost</param>
+            <param name="messageReceivedAsync">Methode qui recevra l'évènement</param>
+            <returns></returns>
+        </member>
+        <member name="M:Tdi.RabbitMQ.Bll.Services.RabbitMQService.ConnectToServer(System.Uri)">
+            <summary>
+            Connexion au serveur de manière synchrone
+            </summary>
+            <param name="uri">amqp://user:pass@hostName:port/vhost</param>
+        </member>
+        <member name="M:Tdi.RabbitMQ.Bll.Services.RabbitMQService.ConnectToServerWithConsumersAsync(System.Uri)">
+            <summary>
+            Connexion au serveur avec la consommation des messages de maniere asynchrone
+            </summary>
+            <param name="uri">amqp://user:pass@hostName:port/vhost</param>
+        </member>
+        <member name="M:Tdi.RabbitMQ.Bll.Services.RabbitMQService.DeclareLinkOnChannel(System.String,System.String)">
+            <summary>
+            Declare la file d'attente et l'échangeur lié au canal d'écoute
+            </summary>
+            <param name="queueName">Nom de la file d'attente ou null</param>
+            <param name="exchangeName">Nom de l'echangeur ou null</param>
+        </member>
+        <member name="M:Tdi.RabbitMQ.Bll.Services.RabbitMQService.ClearChannel">
+            <summary>
+            Suppression du canal écouté et ses déclarations afin de rappeler DeclareChannel()
+            </summary>
+        </member>
+        <member name="M:Tdi.RabbitMQ.Bll.Services.RabbitMQService.SetEventHandlerMessage(System.EventHandler{Tdi.RabbitMQ.Bll.Models.DataReceived},System.Boolean)">
+            <summary>
+            Specifie une methode qui recevra l'évenement à la réception d'un message
+            </summary>
+            <param name="messageReceived">Methode qui recevra l'évènement</param>
+            <param name="forcedNewSubscription">Force un nouveau abonnement même si celui si existe deja</param>
+        </member>
+        <member name="M:Tdi.RabbitMQ.Bll.Services.RabbitMQService.DeleteEventHandlerMessage(System.EventHandler{Tdi.RabbitMQ.Bll.Models.DataReceived})">
+            <summary>
+            Desabonne la methode qui recoit l'evenement à la réception d'un message
+            </summary>
+            <param name="messageReceived">Methode a désabonner</param>
+        </member>
+        <member name="M:Tdi.RabbitMQ.Bll.Services.RabbitMQService.SetEventHandlerMessageAsync(RabbitMQ.Client.Events.AsyncEventHandler{Tdi.RabbitMQ.Bll.Models.DataReceived},System.Boolean)">
+            <summary>
+            Specifie une methode qui recevra l'évenement à la réception d'un message en asynchrone
+            </summary>
+            <param name="messageReceivedAsync">Methode qui recevra l'évènement</param>
+            <param name="forcedNewSubscription">Force un nouveau abonnement même si celui si existe deja</param>
+        </member>
+        <member name="M:Tdi.RabbitMQ.Bll.Services.RabbitMQService.DeleteEventHandlerMessageAsync(RabbitMQ.Client.Events.AsyncEventHandler{Tdi.RabbitMQ.Bll.Models.DataReceived})">
+            <summary>
+            Desabonne la methode qui recoit l'evenement à la réception d'un message en asynchrone
+            </summary>
+            <param name="messageReceivedAsync">Methode a désabonner</param>
+        </member>
+        <member name="M:Tdi.RabbitMQ.Bll.Services.RabbitMQService.DisconnectToServer(System.EventHandler{Tdi.RabbitMQ.Bll.Models.DataReceived})">
+            <summary>
+            Ferme la connexion au serveur et se désabonne
+            </summary>
+            <param name="messageReceived">null ou methode</param>
+        </member>
+        <member name="M:Tdi.RabbitMQ.Bll.Services.RabbitMQService.DisconnectToServerAsync(RabbitMQ.Client.Events.AsyncEventHandler{Tdi.RabbitMQ.Bll.Models.DataReceived})">
+            <summary>
+            Ferme la connexion au serveur et se désabonne en asynchrone
+            </summary>
+            <param name="messageReceived"></param>
+        </member>
+        <member name="M:Tdi.RabbitMQ.Bll.Services.RabbitMQService.SendDirectData(System.String,System.String)">
+            <summary>
+            Envoi un message sur la file d'attente
+            </summary>
+            <param name="data">Données à envoyer</param>
+            <param name="forcedQueueName">Si non vide : envoie le message sur cette file d'attente</param>
+        </member>
+        <member name="M:Tdi.RabbitMQ.Bll.Services.RabbitMQService.SendTopicData(System.String,System.String)">
+            <summary>
+            Envoyer un sujet sur l'échangeur
+            </summary>
+            <param name="topic">Nom du sujet</param>
+            <param name="data">Données à envoyer</param>
+            <example>
+            SendTopicData(ConstantsHelper.ExchangeTdiTopics, ConstantsHelper.TopicGenerateEDI, "objet json sérialisé")
+            </example>
+        </member>
+        <member name="M:Tdi.RabbitMQ.Bll.Services.RabbitMQService.GetManualData(System.Boolean)">
+            <summary>
+            Regarde si un message est sur la file d'attente le supprime (si autoAck) et renvoi le message
+            </summary>
+            <param name="autoAck">Supprime le message automatiquement une fois lu</param>
+            <returns></returns>
+        </member>
+        <member name="M:Tdi.RabbitMQ.Bll.Services.RabbitMQService.QueueSubscription(System.Boolean)">
+            <summary>
+            Inscription à une file d'attente défini
+            </summary>
+            <param name="deleteMessageAfterReceive">Suppression du message après lecture du message (par défaut vrai)</param>
+        </member>
+        <member name="M:Tdi.RabbitMQ.Bll.Services.RabbitMQService.ExchangeTopicSubscription(System.Collections.Generic.List{System.String},System.Boolean)">
+            <summary>
+            Abonnement à une liste de sujet sur l'échangeur
+            </summary>
+            <param name="consumerTopics">liste des sujets écoutés</param>
+            <param name="deleteMessageAfterReceive">true si suppression apres la lecture du message</param>
+            <example>
+            string[] topics = new string[1];
+            topics[0] = ConstantsHelper.TopicGenerateEDI;
+            ExchangeTopicSubscription(topics)
+            </example>  
+        </member>
+        <member name="M:Tdi.RabbitMQ.Bll.Services.RabbitMQService.FlagReadMessage(System.UInt64)">
+            <summary>
+            Indique que le message a été traité
+            </summary>
+            <param name="deliveryTag">Tag du message réceptionné</param>
+            <example>
+            FlagReadMessage(dataReceived.DeliveryTag);
+            </example>
+        </member>
+        <member name="M:Tdi.RabbitMQ.Bll.Services.RabbitMQService.ConnectToRabbitMQ(System.Uri,System.Boolean)">
+            <summary>
+            Connexion au serveur rabbit en async ou pas
+            </summary>
+            <param name="uri"></param>
+            <param name="isAsync"></param>
+        </member>
+        <member name="M:Tdi.RabbitMQ.Bll.Services.RabbitMQService.DisconnectToRabbitMq">
+            <summary>
+            Déconnection du canal et de la connexion
+            </summary>
+        </member>
+        <member name="M:Tdi.RabbitMQ.Bll.Services.RabbitMQService.QueueDeclare(System.String)">
+            <summary>
+            Déclaration de la file d'attente
+            </summary>
+            <param name="queueName"></param>
+        </member>
+        <member name="M:Tdi.RabbitMQ.Bll.Services.RabbitMQService.ExchangeDeclare(System.String)">
+            <summary>
+            Déclaration de l'échangeur
+            </summary>
+            <param name="exchangeName"></param>
+        </member>
+        <member name="M:Tdi.RabbitMQ.Bll.Services.RabbitMQService.EventBasicConsumer(System.Boolean)">
+            <summary>
+            Associe l'evenement du message reception au canal
+            </summary>
+            <param name="deleteMessageAfterReceive">true si suppression du message une fois lu</param>
+        </member>
+        <member name="M:Tdi.RabbitMQ.Bll.Services.RabbitMQService.EventBasicConsumerAsync(System.Boolean)">
+            <summary>
+            Associe l'evenement du message reception au canal en asynchrone
+            </summary>
+            <param name="deleteMessageAfterReceive"></param>
+        </member>
+        <member name="M:Tdi.RabbitMQ.Bll.Services.RabbitMQService.Consumer_Received(System.Object,RabbitMQ.Client.Events.BasicDeliverEventArgs)">
+            <summary>
+            Evenement lors de la reception du message d'une file d'attente pour suppression automatique
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Tdi.RabbitMQ.Bll.Services.RabbitMQService.Consumer_ReceivedAsync(System.Object,RabbitMQ.Client.Events.BasicDeliverEventArgs)">
+            <summary>
+            Evenement lors de la reception du message d'une file d'attente en asynchrone pour suppression automatique
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Tdi.RabbitMQ.Bll.Services.RabbitMQService.Consumer_ReceivedAck(System.Object,RabbitMQ.Client.Events.BasicDeliverEventArgs)">
+            <summary>
+            Evenement lors de la reception du message d'une file d'attente pour suppression manuelle
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Tdi.RabbitMQ.Bll.Services.RabbitMQService.Consumer_ReceivedAckAsync(System.Object,RabbitMQ.Client.Events.BasicDeliverEventArgs)">
+            <summary>
+            Evenement lors de la reception du message d'une file d'attente pour suppression manuelle
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+    </members>
+</doc>

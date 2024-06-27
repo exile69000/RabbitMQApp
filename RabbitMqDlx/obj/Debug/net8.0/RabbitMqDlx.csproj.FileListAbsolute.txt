@@ -1,0 +1,17 @@
+C:\Users\j.martin\Documents\Dev\Tracking\RabbitMQApp\RabbitMqDlx\bin\Debug\net8.0\RabbitMqDlx.exe
+C:\Users\j.martin\Documents\Dev\Tracking\RabbitMQApp\RabbitMqDlx\bin\Debug\net8.0\RabbitMqDlx.deps.json
+C:\Users\j.martin\Documents\Dev\Tracking\RabbitMQApp\RabbitMqDlx\bin\Debug\net8.0\RabbitMqDlx.runtimeconfig.json
+C:\Users\j.martin\Documents\Dev\Tracking\RabbitMQApp\RabbitMqDlx\bin\Debug\net8.0\RabbitMqDlx.dll
+C:\Users\j.martin\Documents\Dev\Tracking\RabbitMQApp\RabbitMqDlx\bin\Debug\net8.0\RabbitMqDlx.pdb
+C:\Users\j.martin\Documents\Dev\Tracking\RabbitMQApp\RabbitMqDlx\bin\Debug\net8.0\RabbitMQ.Client.dll
+C:\Users\j.martin\Documents\Dev\Tracking\RabbitMQApp\RabbitMqDlx\obj\Debug\net8.0\RabbitMqDlx.csproj.AssemblyReference.cache
+C:\Users\j.martin\Documents\Dev\Tracking\RabbitMQApp\RabbitMqDlx\obj\Debug\net8.0\RabbitMqDlx.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\j.martin\Documents\Dev\Tracking\RabbitMQApp\RabbitMqDlx\obj\Debug\net8.0\RabbitMqDlx.AssemblyInfoInputs.cache
+C:\Users\j.martin\Documents\Dev\Tracking\RabbitMQApp\RabbitMqDlx\obj\Debug\net8.0\RabbitMqDlx.AssemblyInfo.cs
+C:\Users\j.martin\Documents\Dev\Tracking\RabbitMQApp\RabbitMqDlx\obj\Debug\net8.0\RabbitMqDlx.csproj.CoreCompileInputs.cache
+C:\Users\j.martin\Documents\Dev\Tracking\RabbitMQApp\RabbitMqDlx\obj\Debug\net8.0\RabbitMq.B0D7E62D.Up2Date
+C:\Users\j.martin\Documents\Dev\Tracking\RabbitMQApp\RabbitMqDlx\obj\Debug\net8.0\RabbitMqDlx.dll
+C:\Users\j.martin\Documents\Dev\Tracking\RabbitMQApp\RabbitMqDlx\obj\Debug\net8.0\refint\RabbitMqDlx.dll
+C:\Users\j.martin\Documents\Dev\Tracking\RabbitMQApp\RabbitMqDlx\obj\Debug\net8.0\RabbitMqDlx.pdb
+C:\Users\j.martin\Documents\Dev\Tracking\RabbitMQApp\RabbitMqDlx\obj\Debug\net8.0\RabbitMqDlx.genruntimeconfig.cache
+C:\Users\j.martin\Documents\Dev\Tracking\RabbitMQApp\RabbitMqDlx\obj\Debug\net8.0\ref\RabbitMqDlx.dll

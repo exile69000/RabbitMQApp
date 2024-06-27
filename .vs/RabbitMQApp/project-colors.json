@@ -1,0 +1,16 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "a0c0dfb5-2e17-46c7-b48a-41a74851bc6c": {
+      "ProjectGuid": "a0c0dfb5-2e17-46c7-b48a-41a74851bc6c",
+      "DisplayName": "RabbitMQApp",
+      "ColorIndex": 0
+    },
+    "fc02abd5-773d-4b7f-aabe-482cbd28007f": {
+      "ProjectGuid": "fc02abd5-773d-4b7f-aabe-482cbd28007f",
+      "DisplayName": "RabbitMQAppNet6",
+      "ColorIndex": 1
+    }
+  },
+  "NextColorIndex": 2
+}
