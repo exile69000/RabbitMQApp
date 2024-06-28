@@ -8,9 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Reference Include="RabbitMQ.Client">
-      <HintPath>..\RabbitMQApp\bin\Debug\net5.0\RabbitMQ.Client.dll</HintPath>
-    </Reference>
+    <PackageReference Include="RabbitMQ.Client" Version="6.8.1" />
   </ItemGroup>
 
 </Project>

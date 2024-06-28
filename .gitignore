@@ -15,3 +15,6 @@
 /ProducerApp/
 /RabbitMQSql/
 /RabbitMqTest/
+bin/
+obj/
+.vs/
